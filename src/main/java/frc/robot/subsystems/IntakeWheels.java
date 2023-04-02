@@ -33,6 +33,7 @@ public class IntakeWheels extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("IntakeWheels Current", m_motor.getOutputCurrent());
   }
 
   public boolean conIsAcquired() {
@@ -71,6 +72,10 @@ public class IntakeWheels extends SubsystemBase {
               .withTimeout(2)
               .finallyDo((interrupted) -> m_motor.set(0))
               .withName("ReleaseCube");
+  }
+
+  public CommandBase stopCmd() {
+    return this.runOnce(() -> m_motor.set(0));
   }
 
 }

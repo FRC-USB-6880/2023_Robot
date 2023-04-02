@@ -159,6 +159,8 @@ public class IntakeArm extends SubsystemBase {
     SmartDashboard.putNumber("Arm Position", curPos);
     SmartDashboard.putBoolean("Arm can move in CW direction", armHasRoomFor_CW_rotation());
     SmartDashboard.putBoolean("Arm can move in CCW direction", armHasRoomFor_CCW_rotation());
+    SmartDashboard.putNumber("Output Current Left", m_motorLeft.getOutputCurrent());
+    SmartDashboard.putNumber("Output Current Right", m_motorRight.getOutputCurrent());
   }
 
   @Override

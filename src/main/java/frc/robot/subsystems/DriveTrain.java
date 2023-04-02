@@ -12,10 +12,12 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import frc.robot.Constants.CAN_IDs;
 import frc.robot.Constants.DriveTrainConstants;
+import frc.robot.Constants.PositionConstants.ChargingStation;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.util.Units;
 import edu.wpi.first.util.sendable.SendableBuilder;
 import edu.wpi.first.wpilibj.SPI.Port;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
@@ -98,8 +100,9 @@ public class DriveTrain extends SubsystemBase {
                   _altitude += driveDist * Math.sin(Units.degreesToRadians(theta));
                   // Apply some tolerance to theta
                   // Charging station height is 9.125"
-                  // Add distanceTravelled consition also
-                  if (_altitude > 7 && (theta < 5 && theta > -5)) {
+                  // Add distanceTravelled condition also
+                  if (Math.abs(_altitude - ChargingStation.height) < ChargingStation.heightTolerance && 
+                      Math.abs(theta) <= ChargingStation.levelTolerance) {
                     return true;
                   } else {
                     return false;
@@ -136,12 +139,15 @@ public class DriveTrain extends SubsystemBase {
 
   public double distanceTravelled() {
     // Assumes that the Robot is moving straight.
-    return Math.max(m_leftEncoder.getPosition(), m_rightEncoder.getPosition());
+    return (m_leftEncoder.getPosition() + m_rightEncoder.getPosition()) / 2;
   }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Pitch", m_gyro.getPitch());
+    SmartDashboard.putNumber("Roll", m_gyro.getRoll());
+    SmartDashboard.putNumber("Yaw", m_gyro.getYaw());
   }
   @Override
   public void simulationPeriodic() {

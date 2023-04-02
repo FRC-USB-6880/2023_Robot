@@ -136,5 +136,7 @@ public class Elevator extends SubsystemBase {
     SmartDashboard.putBoolean("Is Elevator in Safe position?", !elevatorIsNotSafe());
     SmartDashboard.putBoolean("ElevatorCanGoHigher", elevatorCanGoHigher());
     SmartDashboard.putBoolean("ElevatorCanGoLower", elevatorCanGoLower());
+    SmartDashboard.putNumber("Output Current Left motor", m_motorLeft.getOutputCurrent());
+    SmartDashboard.putNumber("Output Current Right motor", m_motorRight.getOutputCurrent());
   }
 }

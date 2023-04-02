@@ -108,5 +108,9 @@ public class Slider extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
+    SmartDashboard.putNumber("Slider Position", m_encoder.getPosition());
+    SmartDashboard.putBoolean("Slider Can slide out", sliderCanSlideOut());
+    SmartDashboard.putBoolean("Slider can slide In", sliderCanSlideIn());
+    SmartDashboard.putNumber("Current Output", m_motor.getOutputCurrent());
   }
 }

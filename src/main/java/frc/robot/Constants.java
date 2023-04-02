@@ -141,5 +141,18 @@ public final class Constants {
       public static final double kSliderExtension = 36.0; // inches
       public static final double kArmAngle = 135; // degrees
     }
+    public static class ChargingStation {
+      public static final double lowerRampDegrees = 11;
+      public static final double upperRampDegrees = 71.5;
+      // Note: When the charge station is level, both the ramps on 
+      // either side of the main surface are at 15 degrees.
+      // But this number is irrelevant for the purpose autonomous programming.
+      public static final double RampDegreesWhenEngaged = 34.25;
+      public static final double levelTolerance = 2.5; // in degrees
+      public static final double height = 9.125; // in inches
+      public static final double heightTolerance = 2; // in inches
+      public static final double communityShortDist = (11*12)+(3/8); // in inches
+      public static final double communityLongDist = (16*12) + 1.25; // in inches
+    }
   }
 }
