@@ -24,7 +24,7 @@ public final class Constants {
     public static final int elevatorRight = 22;
     public static final int slider = 23;
     public static final int intakeArmLeft = 26;
-    public static final int intakeArmRight = 27;
+    // public static final int intakeArmRight = 27;
     public static final int intakeWheels = 28;
   }
 
@@ -32,7 +32,7 @@ public final class Constants {
     public static final boolean kLeftInverted = true;
     public static final boolean kRightInverted = false;
 
-    public static final int kCurrentLimit = 55;
+    public static final int kCurrentLimit = 60;
 
     public static final double kTurningScale = 0.5;
 
@@ -47,7 +47,7 @@ public final class Constants {
   public static class ElevatorConstants {
     public static final boolean kMotorLeft_inverted = false;
     public static final boolean kMotorRight_inverted = true;
-    public static final int kCurrentLimit = 40;
+    public static final int kCurrentLimit = 80;
     public static final double kElevatorGearRatio = 1 / (5 * 4); // 5:1 * 4:1
     // RevRobotics 16T Sprocket pitch size is 1.29 inches
     // https://www.revrobotics.com/25-sprockets/
@@ -60,7 +60,7 @@ public final class Constants {
     public static final double kMinTravelInInches = 0;
     public static final double kMaxTravelInInches = 36; // ToDo:  Verify with experimentation
     public static final double kToleranceInInches = 1.8; // 5% of travel length
-    public static final double kElevatorSpeedUp = 0.7;
+    public static final double kElevatorSpeedUp = 0.5;
     public static final double kElevatorSpeedDown = -0.3;
   }
 
@@ -80,14 +80,14 @@ public final class Constants {
     public static final double kMaxTravelInInches = 23; // ToDo:  Verify with experimentation
     public static final double kToleranceInInches = 1.2; // 5% of travel length
 
-    public static final double kSliderSpeedOut = 0.7;
+    public static final double kSliderSpeedOut = 0.3;
     public static final double kSliderSpeedIn = -0.3;
   }
 
   public static class IntakeArmConstants {
     public static final boolean kMotorLeftInverted = false;
     public static final boolean kMotorRightInverted = true;
-    public static final int kCurrentLimit = 40;
+    public static final int kCurrentLimit = 80;
     // We want 1 rotations of motor = 6 degrees of arm
     // => 1 m = 6/360 a => a/m = 360/6 = 60
     public static final double kArmGearRatio = 1 / (5 * 4 * 4); // 5:1 * 4:1 * 64T:16T
@@ -109,7 +109,7 @@ public final class Constants {
   }
   public static class IntakeWheelsConstants {
     public static final boolean kWheelsInverted = false;
-    public static final int kCurrentLimit = 30;
+    public static final int kCurrentLimit = 70;
     // The current being drawn goes up when the cone or cube ir grabbed.
     // In the constant definitions below, we are assuming that current drawn is >= 20amp
     //    when a cone is acquired by the intake wheels.

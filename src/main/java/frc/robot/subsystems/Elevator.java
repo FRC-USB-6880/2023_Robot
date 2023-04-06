@@ -4,11 +4,15 @@
 
 package frc.robot.subsystems;
 
+//import java.util.Random;
+//import java.util.random.RandomGenerator;
+
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.ConditionalCommand;
@@ -19,6 +23,7 @@ import frc.robot.Constants.ElevatorConstants;
 public class Elevator extends SubsystemBase {
   private final CANSparkMax m_motorLeft, m_motorRight;
   private final RelativeEncoder m_encoderLeft, m_encoderRight;
+  private double curPosLeft, curPosRight;
 
   /** Creates a new Elevator. */
   public Elevator() {
@@ -49,6 +54,7 @@ public class Elevator extends SubsystemBase {
   private void resetEncoders() {
     m_encoderLeft.setPosition(0);
     m_encoderRight.setPosition(0);
+    curPosLeft = curPosRight = 0.0;
   }
 
   private void setSpeed(double speed) {
@@ -130,13 +136,25 @@ public class Elevator extends SubsystemBase {
 
   @Override
   public void periodic() {
+    curPosLeft = m_encoderLeft.getPosition();
+    curPosRight = m_encoderRight.getPosition();
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("LeftPosition", m_encoderLeft.getPosition());
-    SmartDashboard.putNumber("RightPosition", m_encoderRight.getPosition());
+    SmartDashboard.putNumber("LeftPosition", curPosLeft);
+    SmartDashboard.putNumber("RightPosition", curPosRight);
     SmartDashboard.putBoolean("Is Elevator in Safe position?", !elevatorIsNotSafe());
     SmartDashboard.putBoolean("ElevatorCanGoHigher", elevatorCanGoHigher());
     SmartDashboard.putBoolean("ElevatorCanGoLower", elevatorCanGoLower());
-    SmartDashboard.putNumber("Output Current Left motor", m_motorLeft.getOutputCurrent());
-    SmartDashboard.putNumber("Output Current Right motor", m_motorRight.getOutputCurrent());
+    SmartDashboard.putNumber("Output Current Elevator Left motor", m_motorLeft.getOutputCurrent());
+    SmartDashboard.putNumber("Output Current Elevator Right motor", m_motorRight.getOutputCurrent());
   }
+
+  @Override
+  public void simulationPeriodic() {
+    // This method will be called once per scheduler run during simulation
+    double nextPosition = MathUtil.clamp(Math.random() * ElevatorConstants.kMaxTravelInInches,
+                              0, ElevatorConstants.kMaxTravelInInches);
+    m_encoderLeft.setPosition(nextPosition);
+    m_encoderRight.setPosition(nextPosition);
+  }
+
 }

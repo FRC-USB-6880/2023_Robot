@@ -17,7 +17,8 @@ import frc.robot.Constants.CAN_IDs;
 import frc.robot.Constants.IntakeArmConstants;
 
 public class IntakeArm extends SubsystemBase {
-  private CANSparkMax m_motorLeft, m_motorRight;
+  private CANSparkMax m_motorLeft;
+  // private CANSparkMax m_motorRight;
   private RelativeEncoder m_encoder;
 
   /** Creates a new ExampleSubsystem. */
@@ -28,11 +29,11 @@ public class IntakeArm extends SubsystemBase {
     m_motorLeft.setSmartCurrentLimit(IntakeArmConstants.kCurrentLimit);
     m_motorLeft.burnFlash();
 
-    m_motorRight = new CANSparkMax(CAN_IDs.intakeArmRight, MotorType.kBrushless);
-    m_motorRight.setIdleMode(IdleMode.kBrake);
-    m_motorRight.setSmartCurrentLimit(IntakeArmConstants.kCurrentLimit);
-    m_motorRight.follow(m_motorLeft, IntakeArmConstants.kMotorRightInverted);
-    m_motorRight.burnFlash();
+    // m_motorRight = new CANSparkMax(CAN_IDs.intakeArmRight, MotorType.kBrushless);
+    // m_motorRight.setIdleMode(IdleMode.kBrake);
+    // m_motorRight.setSmartCurrentLimit(IntakeArmConstants.kCurrentLimit);
+    // m_motorRight.follow(m_motorLeft, IntakeArmConstants.kMotorRightInverted);
+    // m_motorRight.burnFlash();
 
     m_encoder = m_motorLeft.getEncoder();
     m_encoder.setPositionConversionFactor(IntakeArmConstants.kPositionFactor);
@@ -102,7 +103,7 @@ public class IntakeArm extends SubsystemBase {
   public CommandBase turnUp() {
     // Inline construction of command goes here.
     // Subsystem::runOnce implicitly requires `this` subsystem.
-    return this.runOnce(() -> m_motorLeft.set(IntakeArmConstants.kArmUpSpeed))
+    return this.run(() -> m_motorLeft.set(IntakeArmConstants.kArmUpSpeed))
             .unless(() -> this.armIsNotsafe() || !armHasRoomFor_CW_rotation());
   }
 
@@ -114,7 +115,7 @@ public class IntakeArm extends SubsystemBase {
   public CommandBase turnDown() {
     // Inline construction of command goes here.
     // Subsystem::RunOnce implicitly requires `this` subsystem.
-    return this.runOnce(() -> m_motorLeft.set(IntakeArmConstants.kArmDownSpeed))
+    return this.run(() -> m_motorLeft.set(IntakeArmConstants.kArmDownSpeed))
               .unless(() -> this.armIsNotsafe() || !armHasRoomFor_CCW_rotation());
   }
 
@@ -139,8 +140,9 @@ public class IntakeArm extends SubsystemBase {
    * @return value of some boolean subsystem state, such as a digital sensor.
    */
   public boolean armIsNotsafe() {
-    return ((m_motorLeft.getOutputCurrent() < IntakeArmConstants.kCurrentLimit) &&
-        (m_motorRight.getOutputCurrent() < IntakeArmConstants.kCurrentLimit));
+    return false;//((m_motorLeft.getOutputCurrent() < IntakeArmConstants.kCurrentLimit));
+    //  &&
+    //     (m_motorRight.getOutputCurrent() < IntakeArmConstants.kCurrentLimit));
   }
 
   public boolean armHasRoomFor_CW_rotation() {
@@ -159,8 +161,8 @@ public class IntakeArm extends SubsystemBase {
     SmartDashboard.putNumber("Arm Position", curPos);
     SmartDashboard.putBoolean("Arm can move in CW direction", armHasRoomFor_CW_rotation());
     SmartDashboard.putBoolean("Arm can move in CCW direction", armHasRoomFor_CCW_rotation());
-    SmartDashboard.putNumber("Output Current Left", m_motorLeft.getOutputCurrent());
-    SmartDashboard.putNumber("Output Current Right", m_motorRight.getOutputCurrent());
+    SmartDashboard.putNumber("Arm Output Current", m_motorLeft.getOutputCurrent());
+    // SmartDashboard.putNumber("Output Current Right", m_motorRight.getOutputCurrent());
   }
 
   @Override

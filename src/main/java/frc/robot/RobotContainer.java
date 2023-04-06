@@ -11,6 +11,7 @@ import frc.robot.subsystems.Elevator;
 import frc.robot.subsystems.IntakeArm;
 import frc.robot.subsystems.IntakeWheels;
 import frc.robot.subsystems.Slider;
+import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
@@ -42,10 +43,11 @@ public class RobotContainer {
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
+    CameraServer.startAutomaticCapture();
     // Configure the trigger bindings
     configureBindings();
     // Put the robot touching the community line, and move the drive train by the RobotLength distance.
-    m_autoChooser.setDefaultOption("MobilityPoints", m_drive.driveDistanceCommand(40, 0.3));
+    m_autoChooser.setDefaultOption("MobilityPoints", m_drive.driveDistanceCommand(10, 0.3));
     m_autoChooser.addOption("ScoreAndEngage", Autos.ScoreAndEngage(m_drive, m_elevator, m_slider, m_intakeArm, m_intakeWheels));
     m_autoChooser.addOption("ScoreAndMobilityShort", Autos.ScoreAndMobilityShort(m_drive, m_elevator, m_slider, m_intakeArm, m_intakeWheels));
     m_autoChooser.addOption("ScoreAndMobilityLong", Autos.ScoreAndMobilityLong(m_drive, m_elevator, m_slider, m_intakeArm, m_intakeWheels));
@@ -62,10 +64,10 @@ public class RobotContainer {
    */
   private void configureBindings() {
     // Schedule `ExampleCommand` when `exampleCondition` changes to `true`
-    new Trigger(m_elevator::elevatorIsNotSafe)
-        .onTrue(m_elevator.stopCmd());
-    new Trigger(m_intakeArm::armIsNotsafe)
-        .onTrue(m_intakeArm.stopCmd());
+    // new Trigger(m_elevator::elevatorIsNotSafe)
+    //     .onTrue(m_elevator.stopCmd());
+    // new Trigger(m_intakeArm::armIsNotsafe)
+    //     .onTrue(m_intakeArm.stopCmd());
 
     //set up the drivetrain command that runs all the time
     m_drive.setDefaultCommand(new RunCommand(

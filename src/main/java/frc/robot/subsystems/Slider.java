@@ -96,12 +96,12 @@ public class Slider extends SubsystemBase {
   }
 
   public CommandBase slideOut() {
-    return this.runOnce(() -> m_motor.set(SliderConstants.kSliderSpeedOut))
+    return this.run(() -> m_motor.set(SliderConstants.kSliderSpeedOut))
               .unless(() -> !sliderCanSlideOut());
   }
 
   public CommandBase slideIn() {
-    return this.runOnce(() -> m_motor.set(SliderConstants.kSliderSpeedIn))
+    return this.run(() -> m_motor.set(SliderConstants.kSliderSpeedIn))
               .unless(() -> !sliderCanSlideIn());
   }
 
@@ -111,6 +111,6 @@ public class Slider extends SubsystemBase {
     SmartDashboard.putNumber("Slider Position", m_encoder.getPosition());
     SmartDashboard.putBoolean("Slider Can slide out", sliderCanSlideOut());
     SmartDashboard.putBoolean("Slider can slide In", sliderCanSlideIn());
-    SmartDashboard.putNumber("Current Output", m_motor.getOutputCurrent());
+    SmartDashboard.putNumber("Slider Current Output", m_motor.getOutputCurrent());
   }
 }

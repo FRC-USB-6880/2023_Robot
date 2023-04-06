@@ -1,0 +1,11 @@
+{
+  "NTProvider": {
+    "types": {
+      "/FMSInfo": "FMSInfo",
+      "/SmartDashboard/Elevator": "Subsystem",
+      "/SmartDashboard/IntakeArm": "Subsystem",
+      "/SmartDashboard/IntakeWheels": "Subsystem",
+      "/SmartDashboard/Slider": "Subsystem"
+    }
+  }
+}

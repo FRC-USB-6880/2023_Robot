@@ -65,6 +65,9 @@ public class DriveTrain extends SubsystemBase {
     m_gyro = new AHRS(Port.kMXP);
     m_gyro.resetDisplacement();
     m_gyro.reset();
+
+    SmartDashboard.putData(this);
+    SmartDashboard.putData(driveToChargeStationCmd(0.3));
   }
 
   public void driveArcade(double _straight, double _turn) {
@@ -148,6 +151,7 @@ public class DriveTrain extends SubsystemBase {
     SmartDashboard.putNumber("Pitch", m_gyro.getPitch());
     SmartDashboard.putNumber("Roll", m_gyro.getRoll());
     SmartDashboard.putNumber("Yaw", m_gyro.getYaw());
+    SmartDashboard.putNumber("_altitude", _altitude);
   }
   @Override
   public void simulationPeriodic() {
